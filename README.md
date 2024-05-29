@@ -35,4 +35,15 @@ Command breakdown:
 
 When the container is running, you should be able to access the python flask app at http://127.0.0.1:5000
 
-## GitHub Actions
+## Docker Image CI Workflow
+
+This repository contains a GitHub Actions workflow for building and pushing a Docker image to Docker Hub. The workflow is triggered whenever code is pushed to the `main` branch.
+
+1. **Trigger**:
+   - The workflow is triggered by pushes to the `main` branch and pull requests targeting `main`.
+
+2. **Steps**:
+   - **Checkout**: The workflow checks out the repository's code.
+   - **Log in to Docker Hub**: It uses the `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` repo secrets to login via docker cli.
+   - **Build the Docker image**: The image is built from the repository's code and tagged with the current timestamp.
+   - **Push the Docker image**: The image is pushed to Docker Hub.
