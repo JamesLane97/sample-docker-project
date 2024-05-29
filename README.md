@@ -1,7 +1,3 @@
-## Sample Docker Project
-
-A simple docker image which hosts the Big Star Collectibles example python flask app.
-
 ## Building the Docker image locally
 
 Clone the repo and, vavigate to the directory which contains the `dockerfile` then execute the docker build command below.
