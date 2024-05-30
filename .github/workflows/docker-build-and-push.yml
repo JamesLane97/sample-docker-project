@@ -5,21 +5,27 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      # Log in to Docker Hub using the GitHub token
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-
       # Build the Docker image and tag it with the current timestamp
       - name: Build the Docker image
         run: docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:$(date +%s) --rm
+
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Log in to Docker Hub using the GitHub token
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       # Push the Docker image to Docker Hub
       - name: Push the Docker image
