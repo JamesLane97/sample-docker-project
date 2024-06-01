@@ -90,8 +90,6 @@ This repository contains a GitHub Actions workflow for building and pushing a Do
 
 ## Pulling and running the Docker image from DockerHub
 
-Image on DockerHub: [`https://hub.docker.com/r/jjclane97/sample-docker-project`](https://hub.docker.com/r/jjclane97/sample-docker-project)
-
 Since this repo's workflow builds and pushes the image to Dockerhub, you can pull the image from there and start a container using the following steps:
 
 1. **Pull the image:**
