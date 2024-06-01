@@ -20,9 +20,13 @@ jobs:
         id: timestamp
         run: echo "::set-output name=timestamp::$(date +%s)"
 
-      # Build the Docker image and tag it with the timestamp variable
+      # Build the Docker image and tag it with the UTC timestamp and latest
       - name: Build the Docker image
-        run: docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:${{ steps.timestamp.outputs.timestamp }} --rm
+        run: |
+          docker build . \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:${{ steps.timestamp.outputs.timestamp }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:latest \
+            --rm
 
       # Log in to Docker Hub using the GitHub token
       - name: Log in to Docker Hub
@@ -30,4 +34,6 @@ jobs:
 
       # Push the Docker image to Docker Hub
       - name: Push the Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:${{ steps.timestamp.outputs.timestamp }}
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:${{ steps.timestamp.outputs.timestamp }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/sample-docker-project:latest
